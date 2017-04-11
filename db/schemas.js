@@ -1,33 +1,31 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
+mongoose.connect('mongodb://localhost/myDB');
 
-
-var user = new Schema({
-    id: Number,
+var User = new Schema({
     firstName: String,
     lastName: String,
-    userName: String,
+    userName: {
+      type: String,
+      unique: true
+    },
     password: String,
     email: String,
     playlist: []
 });
 
-var video = new Schema({
+var Video = new Schema({
     id: Number,
     title: String,
     desc: String,
     url: String
 });
 
+const user = mongoose.model("user", User);
+const video = mongoose.model("video", Video);
 
-var ohad = new user({
-    id: 1234,
-    firstName: 'Ohad',
-    lastName: 'Harpaz',
-    userName: 'stam',
-    password: '1234',
-    email: 'email@gamil.com',
-    playlist: [1, 2, 3, 4]
-});
 
-console.log(ohad);
+module.exports = {
+  user: user,
+  video: video
+}
